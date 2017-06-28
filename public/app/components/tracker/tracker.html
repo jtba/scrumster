@@ -1,0 +1,131 @@
+<div class="row" ng-init="getGoals()">
+    <div class="col-md-6">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <div class="panel-title">Yesterday<span class="pull-right">{{goals_yesterday.length}}</span></div>
+            </div>
+            <div class="panel-body">
+                <form id="newgoal" ng-submit="createGoal('yesterday')" role="form">
+                    <div class="col-md-7"><input type="text" ng-model="newgoal_yesterday.goal" class="input-sm form-control" placeholder="Your Goal"/></div>
+                    <div class="col-md-3">
+                        <select ng-model="newgoal_yesterday.status" class="form-control">
+                            <option value="" disabled>---Select Status---</option>
+                            <option value="Completed">Completed</option>
+                            <option value="In-Progress">In-Progress</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2"><input type="submit" class="btn btn-success"/></div>
+                </form>
+                <table class="table table-condensed table-striped table-responsive">
+                    <thead>
+                        <tr><th>Goal</th><th>Status</th><th>Type</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="goal in goals_yesterday track by $index">
+                            <td><a href="" editable-textarea="goal.goal" onbeforesave="updateGoal(goal)">{{goal.goal}}</a></td>
+                            <td>
+                                <select ng-model="goal.status" class="form-control" ng-change="updateGoal(goal)">
+                                    <option value="" disabled>---Select Status---</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="In-Progress">In-Progress</option>
+                                </select>
+                            </td>
+                            <td>{{goal.type}}</td>
+                            <td>
+                                <a class="btn glyphicon glyphicon-arrow-right" title="Copy task to Today" ng-click="workOnGoal(goal)"></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div><!-- End of Yesterday Panel -->
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <div class="panel-title">Today<i class="glyphicon glyphicon-refresh pull-right" style="cursor:pointer;" ng-click="getGoals()"></i>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <form id="newgoal" ng-submit="createGoal('today')" role="form">
+                        <div class="col-md-7"><input type="text" ng-model="newgoal_today.goal" class="input-sm form-control" placeholder="Your Goal"/></div>
+                        <div class="col-md-3">
+                            <select ng-model="newgoal_today.type" class="form-control">
+                                <option value="" disabled>---Select Type---</option>
+                                <option value="Planned">Planned</option>
+                                <option value="Unplanned">Unplanned</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2"><input type="submit" class="btn btn-success"/></div>
+                    </form>
+                </div>
+                <table class="table table-condensed table-striped table-responsive">
+                    <thead>
+                        <tr><th>Goal</th><th>Type</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="goal in goals_today track by $index">
+                            <td><a href="" editable-textarea="goal.goal" onbeforesave="updateGoal(goal)">{{goal.goal}}</a></td>
+                            <td>
+                                <select ng-model="goal.type" class="form-control" ng-change="updateGoal(goal)">
+                                    <option value="" disabled>---Select Type---</option>
+                                    <option value="Planned">Planned</option>
+                                    <option value="Unplanned">Unplanned</option>
+                                </select>
+                            </td>
+                            <td><a class="btn glyphicon glyphicon-trash" title="Remove Goal" ng-click="removeGoal(goal)"></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- End of Today's Panel -->
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <div class="panel-title">Backlog <span class="pull-right">{{goals_backlog.length}}</span></div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr><th>Task</th><th>Status</th><th>Last Worked</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="goal in goals_backlog track by $index">
+                            <td>{{goal.goal}}</td><td>{{goal.status}}</td><td>{{goal.worked_on| date}}</td><td><a class="btn glyphicon glyphicon-arrow-up" title="Add to today's items" ng-click="workOnGoal(goal)"></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- End of backlog panel -->
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-info">
+            <div class="panel-heading"><h4 class="panel-title">Rally Tasks</h4></div>
+            <div class="panel-body">
+                <div ng-repeat="userStory in rally" class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{userStory.FormattedID}}: {{userStory.Name}}<a href="" class="glyphicon glyphicon-arrow-up pull-right"></a></h3>
+                    </div>
+                    <div class="panel-body" ng-bind-html="convertToHtml(userStory.Description)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-info">
+            <div class="panel-heading"><h4 class="panel-title">ServiceNow Tasks</h4></div>
+            <div class="panel-body">
+                <div ng-repeat="userStory in rally" class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{userStory.FormattedID}}: {{userStory.Name}}<a href="" class="glyphicon glyphicon-arrow-up pull-right"></a></h3>
+                    </div>
+                    <div class="panel-body" ng-bind-html="convertToHtml(userStory.Description)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

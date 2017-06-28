@@ -1,0 +1,43 @@
+<div class="row" ng-init="getEvents()">
+    <form ng-submit="createEvent()">
+        <div class="col-md-1 col-md-offset-2">
+            <input type="submit" class="btn btn-success" value="Create Event"/>
+        </div>
+        <div class="col-md-2">
+            <p class="form-group">
+                <input type="text" class="form-control" ng-model="new_event.title" placeholder="Title"/>
+            </p>
+        </div>
+        <div class="col-md-1">
+            <p class="form-group">
+                <select class="form-control" ng-model="new_event.type">
+                    <option disabled>--Type--</option>
+                    <option value="bau">BAU</option>
+                    <option value="oncall">OnCall</option>
+                    <option value="pto">PTO</option>
+                </select>
+            </p>
+        </div>
+        <div class="col-md-2">
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="" ng-model="new_event.start" is-open="start_popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" placeholder="Start Date"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="start_picker()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+        </div>
+        <div class="col-md-2">
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="" ng-model="new_event.end" is-open="end_popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" placeholder="End Date"/>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="end_picker()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </p>
+        </div>
+    </form>
+</div>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div ui-calendar="uiConfig.calendar" ng-model="eventSources"></div>
+    </div>
+</div>

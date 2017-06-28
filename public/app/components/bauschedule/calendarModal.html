@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Event Details - {{event.title}}</h4>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="titleinput" class="col-sm-2 control-label">Title</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="titleinput" ng-model="event.title"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="statusselect" class="col-sm-2 control-label">Type</label>
+            <div class="col-sm-10">
+                <select ng-model="event.type" class="form-control">
+                    <option value="bau">BAU</option>
+                    <option value="oncall">OnCall</option>
+                    <option value="pto">PTO</option>
+                </select>
+            </div>
+        </div>
+    </form>
+    <form class="form-inline">
+        <div class="input-group"> 
+            <input type="text" class="form-control" uib-datepicker-popup="" ng-model="event.start" is-open="start_popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" placeholder="Start Date: {{event.start}}"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="start_picker()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+        <div class="input-group"> 
+            <input type="text" class="form-control" uib-datepicker-popup="" ng-model="event.end" is-open="end_popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" placeholder="End Date"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="end_picker()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="updateEvent()">Save</button>
+    <button class="btn btn-danger" ng-click="deleteEvent()">Delete</button>
+    <button class="btn btn-warning" data-dismiss='modal' aria-label='Close' ng-click="cancel()">Cancel</button>
+</div>

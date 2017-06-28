@@ -1,0 +1,28 @@
+<div class="row" ng-init="getGoals()">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">HIstory</div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-condensed table-striped table-responsive">
+                    <thead>
+                        <tr><th>Goal</th><th>Status</th><th>Type</th><th>Last Updated</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="goal in goals track by $index">
+                            <td>{{goal.goal}}</td>
+                            <td ng-class="{'bg-success':goal.status == 'Completed','bg-danger':goal.status == 'In-Progress', 'bg-info': goal.status == 'Archived'}">
+                                {{goal.status}}
+                            </td>
+                            <td>{{goal.type}}</td>
+                            <td>{{goal.worked_on|date}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>        
+    </div>
+</div>
+
+

@@ -1,0 +1,23 @@
+    Vagrant.configure("2") do |config|
+    # Avoid self-signed ssl issues
+    config.vm.box_download_insecure = true
+    config.vm.network "forwarded_port", guest:80, host:8080 #nginx
+	config.vm.network "forwarded_port", guest:9000, host:9000 # node
+	config.vm.network "forwarded_port", guest:27017, host:27017 # mongodb
+	#config.vm.network :private_network, ip: "10.0.0.11"
+	
+    # Pull the VagrantBox
+    config.vm.box = "vmboxname"
+    config.vm.box_url = "your_vm_server.box"
+
+    config.ssh.username="vagrant"
+    config.ssh.password="vagrant"
+	config.vm.hostname = "nodeserver"
+    # OPTIONAL
+    # Give the vm more memory
+    config.vm.provider "virtualbox" do |v|
+    # 1 GB
+    v.memory = 1024
+    end
+ end
+  
