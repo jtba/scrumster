@@ -5,7 +5,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 module.exports.authUser = function (user) {
     var options = {
         method: "GET",
-        url: "https://itapi.global.dish.com/ldap",
+        url: "<your auth service>",
         headers: {Authorization: user}
     };
 
